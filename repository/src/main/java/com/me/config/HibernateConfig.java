@@ -54,7 +54,7 @@ public class HibernateConfig {
     private final Properties hibernateProperties() {
         Properties hibernateProperties = new Properties();
         hibernateProperties.setProperty(
-                Environment.HBM2DDL_AUTO, "create-drop");
+                Environment.HBM2DDL_AUTO, "update");
         hibernateProperties.setProperty(
                 Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
 

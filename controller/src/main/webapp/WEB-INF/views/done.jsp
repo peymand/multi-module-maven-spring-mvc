@@ -11,6 +11,6 @@
 		<title>Title</title>
 	</head>
 	<body>
-		
+		Student registration Done.
 	</body>
 </html>

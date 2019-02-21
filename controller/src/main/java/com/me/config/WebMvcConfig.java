@@ -72,10 +72,39 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         return viewResolver;
     }
 
+    @Bean
+    public MessageSource messageSource() {
+        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        messageSource.setBasename("message");
+        messageSource.setDefaultEncoding("UTF-8");
+        messageSource.setUseCodeAsDefaultMessage(true);
+        return messageSource;
+    }
+
+    @Bean
+    public LocaleResolver localeResolver() {
+        CookieLocaleResolver resolver = new CookieLocaleResolver();
+        resolver.setDefaultLocale(new Locale("fa"));
+        return resolver;
+    }
+
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        ThemeChangeInterceptor themeChangeInterceptor = new ThemeChangeInterceptor();
+        themeChangeInterceptor.setParamName("theme");
+        registry.addInterceptor(themeChangeInterceptor);
+
+        LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
+        localeChangeInterceptor.setParamName("lang");
+        registry.addInterceptor(localeChangeInterceptor);
+    }
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
         registry.addResourceHandler("/static/**").addResourceLocations("/static/");
+        registry.addResourceHandler("/fonts/**").addResourceLocations("/static/fonts/");
 
     }
 
@@ -90,6 +119,11 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
         configurer.defaultContentType(new MediaType(
                 MediaType.APPLICATION_JSON, parameterMap));
+    }
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/login").setViewName("login");
     }
 
 
